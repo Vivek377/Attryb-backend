@@ -14,6 +14,18 @@ inventoryRoute.get("/", async (req, res) => {
     }
 })
 
+inventoryRoute.get("/yourcars", authentication, async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const items = await InventoryModel.find({ userId });
+        res.status(200).send(items);
+
+    } catch (e) {
+        console.log(e);
+        res.status(400).send({ err: e.message })
+    }
+})
+
 
 inventoryRoute.get("/:id", async (req, res) => {
     try {
